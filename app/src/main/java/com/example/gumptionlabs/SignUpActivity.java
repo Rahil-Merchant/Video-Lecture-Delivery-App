@@ -30,8 +30,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_sign_up);
-        upEmailEt = (EditText) findViewById(R.id.upEmail);
-        upPasswordEt = (EditText) findViewById(R.id.upPassword);
+        upEmailEt = findViewById(R.id.upEmail);
+        upPasswordEt = findViewById(R.id.upPassword);
       //  upPbar=(ProgressBar)findViewById(R.id.upProgressBar) ;
         mAuth = FirebaseAuth.getInstance();
         findViewById(R.id.upSignup).setOnClickListener(this);
@@ -83,8 +83,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             Toast.makeText(getApplicationContext(), "Registration successful, verification mail sent", Toast.LENGTH_SHORT).show();
-                            FirebaseAuth.getInstance().signOut();
-                            startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                            //FirebaseAuth.getInstance().signOut();
+                            startActivity(new Intent(SignUpActivity.this, InfoActivity.class));
                             finish();
 
                         }

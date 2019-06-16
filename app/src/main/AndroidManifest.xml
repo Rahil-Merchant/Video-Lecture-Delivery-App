@@ -12,11 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".VideoPlayer">
-        </activity>
-        <activity
-            android:name=".nav_Activity"
-            android:label="@string/title_activity_nav_" />
+        <activity android:name=".MainActivity"></activity>
+        <!-- <activity android:name=".nav_Activity"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.Default" /> -->
+        <!-- <action android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +29,16 @@
         <activity
             android:name=".InfoActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".VideoPlayer"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="com.example.gumptionlabs.VideoPlayer" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".PasswordActivity"
             android:screenOrientation="portrait" />

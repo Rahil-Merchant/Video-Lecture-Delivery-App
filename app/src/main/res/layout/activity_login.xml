@@ -49,6 +49,13 @@
         android:layout_marginTop="10dp"
         android:text="Google Sign In" />
 
+    <ProgressBar
+        android:id="@+id/inPbar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/inForgot"
         android:layout_width="match_parent"

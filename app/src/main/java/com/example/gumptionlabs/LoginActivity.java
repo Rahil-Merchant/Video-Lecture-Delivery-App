@@ -40,12 +40,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
     private String imei,imei1;
     EditText inEmailEt, inPasswordEt;
-    //   ProgressBar inPbar;
-    private FirebaseUser user;
-    private GoogleSignInClient mGoogleAuth;
+    ProgressBar Pbar;
+    FirebaseUser user;
+    GoogleSignInClient mGoogleAuth;
     int RC_SIGNIN = 0;
     GoogleApiClient mGoogleApiClient;
     private FirebaseFirestore db;
@@ -65,10 +65,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.inSignin).setOnClickListener(this);
         findViewById(R.id.inForgot).setOnClickListener(this);
         findViewById(R.id.gSignIn).setOnClickListener(this);
+        Pbar=findViewById(R.id.inPbar);
         // username_header=findViewById(R.id.uname_header);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken(getString(R.string.default_web_client_id))//367411411207-h0210i0p2pd2qpd4jgkm3rnt0nqbl822.apps.googleusercontent.com
                 .requestEmail()
                 .build();
 
@@ -91,22 +92,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data)
     {
-        /*super.onActivityResult(requestCode,resultCode,data);
-        if(requestCode==RC_SIGNIN){
-            //GoogleSignInResult result=Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-           // GoogleSignInAccount account = null;
-            try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
-            } catch (ApiException e) {
-                e.printStackTrace();
-            }
-           // firebaseAuthWithGoogle(account);
-           // handleSignInResult(result);
-        }*/
-
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
@@ -174,7 +159,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onComplete(@NonNull Task<AuthResult> task) {
                 // inPbar.setVisibility(View.GONE);
             if (task.isSuccessful()) {
+                Pbar.setVisibility(View.GONE);
                 user = mAuth.getCurrentUser();
+                if (user != null && user.getEmail().equals("rahil.merchant69@nmims.edu.in")) {
+                    finish();
+                    startActivity(new Intent(getApplicationContext(),MasterActivity.class));
+                    return;
+                }
                 //check current imei
                 TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
                 if(telephonyManager!=null)
@@ -269,7 +260,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
+                            Pbar.setVisibility(View.GONE);
                             boolean newuser = task.getResult().getAdditionalUserInfo().isNewUser();
                             if (newuser) {
                                 Toast.makeText(LoginActivity.this, "Welcome to Gumption Labs", Toast.LENGTH_SHORT).show();
@@ -340,11 +331,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.inSignup:
-                finish();
                 startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
                 break;
 
             case R.id.inSignin:
+                Pbar.setVisibility(View.VISIBLE);
                 userLogin();
                 break;
 
@@ -353,6 +344,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.gSignIn:
+                Pbar.setVisibility(View.VISIBLE);
                 gsignIn();
                 break;
 

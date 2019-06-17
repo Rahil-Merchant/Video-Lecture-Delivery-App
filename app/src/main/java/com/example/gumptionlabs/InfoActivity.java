@@ -48,6 +48,7 @@ public class InfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
+        setTitle("User Information");
         fnameEt =findViewById(R.id.infoFname);
         mAuth= FirebaseAuth.getInstance();
         lnameEt =findViewById(R.id.infoLname);

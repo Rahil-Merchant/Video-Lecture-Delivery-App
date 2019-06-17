@@ -12,10 +12,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddCourseActivity"></activity>
-        <activity android:name=".MasterActivity" />
-        <activity android:name=".StoreActivity" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".NewCourseActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".AddCourseActivity"/>
+        <activity android:name=".AddCourseActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:parentActivityName=".MasterActivity"/>
+        <activity android:name=".MasterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".StoreActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:parentActivityName=".homeActivity"/>
+        <activity android:name=".SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +38,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".PasswordActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:parentActivityName=".LoginActivity"/>
         <activity
             android:name=".SignUpActivity"
             android:screenOrientation="portrait" />

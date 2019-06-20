@@ -19,7 +19,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".AddVideoActivity"
-            android:parentActivityName=".MasterActivity"
+            android:parentActivityName=".AddCourseActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MyCoursesActivity"

@@ -12,9 +12,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PurchaseCourseActivity"
+        <activity android:name=".PlayerActivity"></activity>
+        <activity
+            android:name=".MyVideoActivity"
+            android:parentActivityName=".MyCoursesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddVideoActivity"
+            android:parentActivityName=".MasterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MyCoursesActivity"
+            android:parentActivityName=".homeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PurchaseCourseActivity"
             android:parentActivityName=".StoreActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".NewCourseActivity"
             android:parentActivityName=".AddCourseActivity"

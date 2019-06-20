@@ -37,7 +37,14 @@ public class homeActivity extends AppCompatActivity {
         findViewById(R.id.store).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),StoreActivity.class));
+                startActivity(new Intent(homeActivity.this,StoreActivity.class));
+            }
+        });
+
+        findViewById(R.id.home_purchased).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(homeActivity.this,MyCoursesActivity.class));
             }
         });
     }

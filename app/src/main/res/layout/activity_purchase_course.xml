@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+
+    tools:context=".PaymentActivity">
+
+
+    <TextView
+
+        android:id="@+id/textView9"
+
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center_horizontal"
+
+        android:layout_marginTop="20dp"
+
+        android:gravity="center_horizontal"
+
+        android:text="You are one step away from purchasing this Course!"
+
+        android:textColor="@color/black"
+
+        android:textSize="16dp" />
+
+    <TextView
+
+        android:id="@+id/textView10"
+
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center_horizontal"
+
+        android:layout_marginTop="20dp"
+
+        android:gravity="center_horizontal"
+
+        android:text="Course Overview: "
+
+        android:textColor="@color/black"
+
+        android:textSize="18dp" />
+
+
+    <LinearLayout
+
+
+        android:layout_width="match_parent"
+
+
+        android:layout_height="wrap_content"
+
+
+        android:layout_marginTop="5dp"
+
+
+        android:orientation="vertical"
+
+        android:paddingTop="10dp">
+
+
+        <!--
+
+                    <include layout="@layout/profile_cards" />
+
+
+
+
+
+        <!-
+
+                    <include layout="@layout/card_layout" />
+
+
+
+
+
+
+
+                    <include layout="@layout/card_layout" />
+
+
+
+        -->
+
+        <TextView
+
+            android:id="@+id/textViewa"
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:paddingLeft="10dp"
+
+            android:text="Course Name: "
+
+            android:textSize="20dp" />
+
+
+        <TextView
+
+            android:id="@+id/purchase_name"
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:paddingLeft="10dp"
+
+            android:paddingTop="3dp"
+
+            android:paddingBottom="3dp"
+
+            android:text="Placeholder" />
+
+
+        <TextView
+
+            android:id="@+id/textViewb"
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:paddingLeft="10dp"
+
+            android:text="Description:"
+
+            android:textSize="20dp" />
+
+
+        <TextView
+
+            android:id="@+id/purchase_desc"
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:paddingLeft="10dp"
+
+            android:paddingTop="3dp"
+
+            android:paddingBottom="3dp"
+
+            android:text="Placeholder" />
+
+
+        <TextView
+
+            android:id="@+id/textViewc"
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:paddingLeft="10dp"
+
+            android:text="Number of Videos:"
+
+            android:textSize="20dp" />
+
+
+        <TextView
+
+            android:id="@+id/purchase_vidCount"
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:paddingLeft="10dp"
+
+            android:paddingTop="3dp"
+
+            android:paddingBottom="3dp"
+
+            android:text="Placeholder" />
+
+
+        <TextView
+
+            android:id="@+id/textViewd"
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:paddingLeft="10dp"
+
+            android:text="Amount Payable:"
+            android:textSize="20dp" />
+
+
+        <TextView
+
+            android:id="@+id/purchase_amt"
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:paddingLeft="10dp"
+
+            android:paddingTop="3dp"
+
+            android:paddingBottom="3dp"
+
+            android:text="Placeholder" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
+        android:text="Select a Payment Method:"
+        android:textColor="@color/black"
+        android:textSize="18dp" />
+
+    <Spinner
+        android:id="@+id/purchase_spinner"
+        android:layout_width="220dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.498"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:id="@+id/purchase_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Purchase Course" />
+</LinearLayout>

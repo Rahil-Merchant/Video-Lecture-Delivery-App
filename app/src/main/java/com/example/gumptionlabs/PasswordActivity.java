@@ -24,7 +24,7 @@ public class PasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
-
+        setTitle("Forgot Password");
         etp=(EditText)findViewById(R.id.passEmail);
         bn=(Button)findViewById(R.id.passBtn);
         mAuth=FirebaseAuth.getInstance();

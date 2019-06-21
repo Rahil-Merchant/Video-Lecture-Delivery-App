@@ -14,7 +14,7 @@ class VideoPlayer  : AppCompatActivity(){
     }
 
     private fun setupView() {
-        lifecycle.addObserver(vimeoPlayer)
-        vimeoPlayer.initialize(59777392)
+        //lifecycle.addObserver(vimeoPlayer)
+        //vimeoPlayer.initialize(59777392)
     }
 }

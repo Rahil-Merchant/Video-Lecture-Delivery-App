@@ -21,14 +21,15 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.ct7ct7ct7.androidvimeoplayer.view.VimeoPlayerView
+   <!--<com.ct7ct7ct7.androidvimeoplayer.view.VimeoPlayerView
         android:id="@+id/vimeoPlayer"
         android:layout_width="match_parent"
         android:layout_height="209dp"
         app:autoPlay="true"
         app:showOriginalControls="true">
 
-    </com.ct7ct7ct7.androidvimeoplayer.view.VimeoPlayerView>
+    </com.ct7ct7ct7.androidvimeoplayer.view.VimeoPlayerView>-->
+
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp"
+    app:cardBackgroundColor="#AAAAAA"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:padding="8dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+
+        >
+
+        <TextView
+            android:id="@+id/addVideo_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center_horizontal"
+            android:maxLines="1"
+            android:text="video name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#3a0d05" />
+
+        <TextView
+            android:id="@+id/addVideo_lengthTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addVideo_name"
+            android:fontFamily="sans-serif-thin"
+            android:background="@drawable/ic_timer"
+            android:layout_marginTop="5dp"
+            android:width="10dp"
+            android:height="10dp"
+            android:layout_marginRight="7dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:id="@+id/addVideo_length"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addVideo_name"
+            android:layout_toEndOf="@id/addVideo_lengthTv"
+            android:fontFamily="sans-serif-thin"
+            android:text="length"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <!-- hide below in MyVideos-->
+        <TextView
+            android:id="@+id/addVideo_urlTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addVideo_lengthTv"
+            android:text="URL : "
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/addVideo_url"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addVideo_lengthTv"
+            android:layout_toEndOf="@id/addVideo_urlTv"
+            android:fontFamily="sans-serif-thin"
+            android:text="placeholder"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/addVideo_pwdTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addVideo_urlTv"
+            android:text="Password : "
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/addVideo_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addVideo_urlTv"
+            android:fontFamily="sans-serif-thin"
+            android:layout_toEndOf="@id/addVideo_pwdTv"
+            android:text="pwd"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/addVideo_timestampTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addVideo_pwdTv"
+            android:layout_alignParentStart="true"
+            android:text="Updated On : "
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/addVideo_timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addVideo_pwdTv"
+            android:layout_toEndOf="@id/addVideo_timestampTv"
+            android:fontFamily="sans-serif-thin"
+            android:text="timestamp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

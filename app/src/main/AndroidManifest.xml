@@ -12,14 +12,43 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
-        <!-- <activity android:name=".nav_Activity"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.Default" /> -->
-        <!-- <action android:name="android.intent.category.LAUNCHER" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
-        <activity android:name=".SplashActivity">
+        <activity android:name=".PlayerActivity"></activity>
+        <activity
+            android:name=".MyVideoActivity"
+            android:parentActivityName=".MyCoursesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddVideoActivity"
+            android:parentActivityName=".AddCourseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MyCoursesActivity"
+            android:parentActivityName=".homeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PurchaseCourseActivity"
+            android:parentActivityName=".StoreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NewCourseActivity"
+            android:parentActivityName=".AddCourseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddCourseActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".MasterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MasterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".StoreActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".homeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,17 +59,8 @@
             android:name=".InfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".VideoPlayer"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <intent-filter>
-                <action android:name="com.example.gumptionlabs.VideoPlayer" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".PasswordActivity"
+            android:parentActivityName=".LoginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".SignUpActivity"

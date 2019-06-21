@@ -30,6 +30,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_sign_up);
+        setTitle("Sign Up");
         upEmailEt = findViewById(R.id.upEmail);
         upPasswordEt = findViewById(R.id.upPassword);
       //  upPbar=(ProgressBar)findViewById(R.id.upProgressBar) ;

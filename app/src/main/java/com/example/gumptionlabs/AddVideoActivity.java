@@ -24,7 +24,7 @@ public class AddVideoActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser user;
     private CollectionReference myvidRef;
-    private MyVideoAdapter adapter;
+    private AddVideoAdapter adapter;
     String docId,uid;
 
     @Override
@@ -75,7 +75,7 @@ public class AddVideoActivity extends AppCompatActivity {
                 .setQuery(query,MyVideo.class)
                 .build();
 
-        adapter = new MyVideoAdapter(options);
+        adapter = new AddVideoAdapter(options);
         RecyclerView recyclerView = findViewById(R.id.MyVideo_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -91,7 +91,7 @@ public class AddVideoActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 adapter.deleteItem(viewHolder.getAdapterPosition());
-                Toast.makeText(AddVideoActivity.this, "Course Deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddVideoActivity.this, "Video Deleted", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
     }

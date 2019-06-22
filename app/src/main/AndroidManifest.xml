@@ -26,6 +26,18 @@
             android:parentActivityName=".homeActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".VideoPlayer"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+
+            android:theme="@style/AppTheme.NoActionBar" >
+            <!--android:screenOrientation="portrait"-->
+            <intent-filter>
+                <action android:name="com.example.gumptionlabs.VideoPlayer" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".PurchaseCourseActivity"
             android:parentActivityName=".StoreActivity"
             android:screenOrientation="portrait" />

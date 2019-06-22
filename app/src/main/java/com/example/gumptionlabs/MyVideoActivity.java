@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -70,8 +72,14 @@ public class MyVideoActivity extends AppCompatActivity {
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 // MyCourse mycourse = documentSnapshot.toObject(MyCourse.class);
                 String id = documentSnapshot.getId(); //document id
-                Intent i = new Intent(MyVideoActivity.this, PlayerActivity.class);
-                i.putExtra("myvideoURL",documentSnapshot.getString("Video_URL"));
+               //Intent i = new Intent(MyVideoActivity.this, PlayerActivity.class);
+                Intent i = new Intent(MyVideoActivity.this, VideoPlayer.class); // my new intent looking hella neat
+                String temp = documentSnapshot.getString("Video_URL");
+                String toSend = temp.substring(18);
+                //Toast.makeText(MyVideoActivity.this, "URL "+toSend, Toast.LENGTH_LONG).show();
+                Log.d("TAG", " "+toSend);
+                i.putExtra("myvideoURL",toSend);  //   New send with only the number part
+                //i.putExtra("myvideoURL",documentSnapshot.getString("Video_URL"));  Older statement
                 String path = documentSnapshot.getReference().getPath(); //path to doc
                 i.putExtra("myvideoPath",path);
                 i.putExtra("myvideoId",id);

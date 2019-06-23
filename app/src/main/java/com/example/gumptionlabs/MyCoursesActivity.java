@@ -1,10 +1,14 @@
 package com.example.gumptionlabs;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -34,6 +38,8 @@ public class MyCoursesActivity extends AppCompatActivity {
             uid = user.getUid();
         }
         mycourseRef=db.collection("users").document(uid).collection("courses_purchased");
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         setUpRecyclerView();
     }
 
@@ -74,4 +80,32 @@ public class MyCoursesActivity extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_store:{
+                    startActivity(new Intent(MyCoursesActivity.this,StoreActivity.class));
+                    return true;
+                }
+                case R.id.navigation_my_courses: {
+                    return true;
+                }
+                case R.id.navigation_info: {
+                    String url = "http://www.gumptionlabs.com";
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
+                    return true;
+                }
+                case R.id.navigation_settings: {
+                    startActivity(new Intent(MyCoursesActivity.this,homeActivity.class));
+                    return true;
+                }
+            }
+            return false;
+        }
+    };
 }

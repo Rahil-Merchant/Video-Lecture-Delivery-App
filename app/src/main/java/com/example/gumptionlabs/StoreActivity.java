@@ -1,11 +1,15 @@
 package com.example.gumptionlabs;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -30,6 +34,8 @@ public class StoreActivity extends AppCompatActivity {
         fab=findViewById(R.id.btn_add_course);
         fab.setVisibility(View.GONE);  //ignore warning, this works
         setUpRecylerView();
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     private void setUpRecylerView() {
@@ -72,4 +78,32 @@ public class StoreActivity extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_my_courses:{
+                    startActivity(new Intent(StoreActivity.this,MyCoursesActivity.class));
+                    return true;
+                }
+                case R.id.navigation_store: {
+                    return true;
+                }
+                case R.id.navigation_info: {
+                    String url = "http://www.gumptionlabs.com";
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
+                    return true;
+                }
+                case R.id.navigation_settings: {
+                    startActivity(new Intent(StoreActivity.this,homeActivity.class));
+                    return true;
+                }
+            }
+            return false;
+        }
+    };
 }

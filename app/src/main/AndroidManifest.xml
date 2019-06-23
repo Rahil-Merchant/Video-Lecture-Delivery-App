@@ -19,14 +19,16 @@
         <activity
             android:name=".MyVideoActivity"
             android:parentActivityName=".MyCoursesActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".AddVideoActivity"
             android:parentActivityName=".MasterActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MyCoursesActivity"
-            android:parentActivityName=".homeActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".VideoPlayer"
@@ -60,7 +62,6 @@
         <activity
             android:name=".StoreActivity"
             android:launchMode="singleTop"
-            android:parentActivityName=".homeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".SplashActivity"

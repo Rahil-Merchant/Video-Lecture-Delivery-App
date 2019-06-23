@@ -1,8 +1,12 @@
 package com.example.gumptionlabs;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -47,5 +51,36 @@ public class homeActivity extends AppCompatActivity {
                 startActivity(new Intent(homeActivity.this,MyCoursesActivity.class));
             }
         });
+
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_my_courses:{
+                    startActivity(new Intent(homeActivity.this,MyCoursesActivity.class));
+                    return true;
+                }
+                case R.id.navigation_store: {
+                    startActivity(new Intent(homeActivity.this,StoreActivity.class));
+                    return true;
+                }
+                case R.id.navigation_info: {
+                    String url = "http://www.gumptionlabs.com";
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
+                    return true;
+                }
+                case R.id.navigation_settings: {
+                    return true;
+                }
+            }
+            return false;
+        }
+    };
 }

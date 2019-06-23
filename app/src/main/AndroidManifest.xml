@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PlayerActivity"></activity>
+        <activity android:name=".NewVideoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".PlayerActivity"
+            android:parentActivityName=".AddVideoActivity"/>
         <activity
             android:name=".MyVideoActivity"
             android:parentActivityName=".MyCoursesActivity"
@@ -28,9 +31,10 @@
         <activity
             android:name=".VideoPlayer"
             android:windowSoftInputMode="stateVisible|adjustResize"
+            android:theme="@style/AppTheme.NoActionBar">
 
-            android:theme="@style/AppTheme.NoActionBar" >
-            <!--android:screenOrientation="portrait"-->
+
+            <!-- android:screenOrientation="portrait" -->
             <intent-filter>
                 <action android:name="com.example.gumptionlabs.VideoPlayer" />
 

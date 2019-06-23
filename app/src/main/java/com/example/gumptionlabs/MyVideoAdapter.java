@@ -22,7 +22,7 @@ public class MyVideoAdapter extends FirestoreRecyclerAdapter<MyVideo, MyVideoAda
     @Override
     protected void onBindViewHolder(@NonNull MyVideoHolder holder, int position, @NonNull MyVideo model) {
         holder.name_tv.setText(model.getVideo_Name());
-        holder.timestamp_tv.setText(model.getTimestamp().toString());
+        holder.timestamp_tv.setText(model.getTimestamp().toDate().toString());
         holder.length_tv.setText(String.valueOf(model.getLength()));
         holder.password_tv.setText(String.valueOf(model.getPassword()));
         holder.url_tv.setText(String.valueOf(model.getVideo_URL()));

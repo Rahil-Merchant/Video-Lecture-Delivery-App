@@ -23,7 +23,7 @@ public class NewCourseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_course);
-        setTitle("Add Course");
+        setTitle("Add Course Details");
         et_name=findViewById(R.id.new_course_name);
         et_desc=findViewById(R.id.new_course_description);
         et_amt=findViewById(R.id.new_course_amount);

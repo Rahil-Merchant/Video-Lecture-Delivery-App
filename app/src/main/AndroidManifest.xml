@@ -27,7 +27,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".VideoPlayer"
-            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:screenOrientation="portrait"
 
             android:theme="@style/AppTheme.NoActionBar" >
             <!--android:screenOrientation="portrait"-->

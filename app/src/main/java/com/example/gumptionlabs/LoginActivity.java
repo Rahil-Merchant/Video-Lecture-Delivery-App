@@ -27,6 +27,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
@@ -34,9 +35,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
@@ -156,7 +159,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
+            public void
+            onComplete(@NonNull Task<AuthResult> task) {
                 // inPbar.setVisibility(View.GONE);
             if (task.isSuccessful()) {
                 Pbar.setVisibility(View.GONE);
@@ -166,46 +170,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     startActivity(new Intent(getApplicationContext(),MasterActivity.class));
                     return;
                 }
-                //check current imei
-                TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-                if(telephonyManager!=null)
-                    imei=telephonyManager.getDeviceId().trim(); //permission requested in splash
-                else
-                {
-                    imei="error";
-                }
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                DocumentReference docRef =  db.collection("users").document(uid);
+                final DocumentReference docRef=  db.collection("users").document(uid);
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document != null && document.exists()) {
-                                imei1 = document.getString("imei").trim();
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                                imei1 = "error";
+                        if(task.isSuccessful()){
+                            DocumentSnapshot doc = task.getResult();
+                            if(doc != null && doc.exists()){
+                                Boolean isPaid = doc.getBoolean("isPaid");
+                                if(isPaid == null)
+                                {
+                                    // don't verify imei
+                                    finish();
+                                    startActivity(new Intent(getApplicationContext(), homeActivity.class));
+                                }
+                                else
+                                {
+                                    //check current imei
+                                    verifyIMEI();
+                                }
                             }
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Can't fetch data", Toast.LENGTH_SHORT).show();
-                            imei1 = "Error";
-                        }
-                        //Toast.makeText(LoginActivity.this, "Original IMEI = " + imei1 + ", Current IMEI = " + imei, Toast.LENGTH_LONG).show();
-                        if (imei.equals(imei1)) {
-                            Toast.makeText(LoginActivity.this, "Welcome back", Toast.LENGTH_SHORT).show();
-                            // FirebaseUser user = mAuth.getCurrentUser();
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), homeActivity.class));
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Sorry, you can only access the app using 1 device", Toast.LENGTH_LONG).show();
-                            FirebaseAuth.getInstance().signOut();
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                            //dont let into app with different imei
                         }
                     }
-                    });
+                });
+
                 }
 
                  else {
@@ -271,57 +260,36 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             // Sign in success, update UI with the signed-in user's information
                             //Log.d("TAG", "signInWithCredential:success");
                             else {
-                                //check current imei
-                                TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-                                if (telephonyManager != null)
-                                    imei = telephonyManager.getDeviceId().trim(); //permission requested in splash, ignore this error
-                                else {
-                                    imei = "error";
-                                }
                                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                DocumentReference docRef =  db.collection("users").document(uid);
+                                final DocumentReference docRef=  db.collection("users").document(uid);
                                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                        if (task.isSuccessful()) {
-                                            DocumentSnapshot document = task.getResult();
-                                            if (document != null && document.exists()) {
-                                                imei1 = document.getString("imei").trim();
-                                            } else {
-                                                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                                                imei1 = "error";
+                                        if(task.isSuccessful()){
+                                            DocumentSnapshot doc = task.getResult();
+                                            if(doc != null && doc.exists()){
+                                                Boolean isPaid = doc.getBoolean("isPaid");
+                                                if(isPaid == null)
+                                                {
+                                                    // don't verify imei
+                                                    finish();
+                                                    startActivity(new Intent(getApplicationContext(), homeActivity.class));
+                                                }
+                                                else
+                                                {
+                                                    //check current imei
+                                                    verifyIMEI();
+                                                }
                                             }
-                                        } else {
-                                            Toast.makeText(LoginActivity.this, "Can't fetch data", Toast.LENGTH_SHORT).show();
-                                            imei1 = "Error";
-                                        }
-                                        //Toast.makeText(LoginActivity.this, "Original IMEI = " + imei1 + ", Current IMEI = " + imei, Toast.LENGTH_LONG).show();
-                                        if (imei.equals(imei1)) {
-                                            Toast.makeText(LoginActivity.this, "Welcome back", Toast.LENGTH_SHORT).show();
-                                            // FirebaseUser user = mAuth.getCurrentUser();
-                                            finish();
-                                            startActivity(new Intent(getApplicationContext(), homeActivity.class));
-                                        } else {
-                                            Toast.makeText(LoginActivity.this, "Sorry, you can only access the app using 1 device", Toast.LENGTH_LONG).show();
-                                            FirebaseAuth.getInstance().signOut();
-                                            finish();
-                                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                                            //dont let into app with different imei
                                         }
                                     }
                                 });
-
-
-
                             }
-
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("TAG", "signInWithCredential:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Some error occurred", Toast.LENGTH_SHORT).show();
-
                         }
-
                     }
                 });
     }
@@ -367,5 +335,46 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Toast.makeText(this, "Connection Failed", Toast.LENGTH_SHORT).show();
     }
 
+    private void verifyIMEI(){
+        TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final DocumentReference docRef=  db.collection("users").document(uid);
+        if(telephonyManager!=null)
+            imei=telephonyManager.getDeviceId().trim(); //permission requested in splash
+        else
+        {
+            imei="error";
+        }
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null && document.exists()) {
+                        imei1 = document.getString("imei").trim();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                        imei1 = "error";
+                    }
+                } else {
+                    Toast.makeText(LoginActivity.this, "Can't fetch data", Toast.LENGTH_SHORT).show();
+                    imei1 = "Error";
+                }
+                //Toast.makeText(LoginActivity.this, "Original IMEI = " + imei1 + ", Current IMEI = " + imei, Toast.LENGTH_LONG).show();
+                if (imei.equals(imei1)) {
+                    Toast.makeText(LoginActivity.this, "Welcome back", Toast.LENGTH_SHORT).show();
+                    // FirebaseUser user = mAuth.getCurrentUser();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), homeActivity.class));
+                } else {
+                    Toast.makeText(LoginActivity.this, "Sorry, you can only access the app using 1 device", Toast.LENGTH_LONG).show();
+                    FirebaseAuth.getInstance().signOut();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    //dont let into app with different imei
+                }
+            }
+        });
+    }
 
 }

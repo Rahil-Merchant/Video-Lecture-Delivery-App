@@ -34,20 +34,6 @@ public class AddVideoActivity extends AppCompatActivity {
 
         setTitle("Edit Videos");
 
-/*      findViewById(R.id.myVideo_url).setVisibility(View.VISIBLE);
-        findViewById(R.id.myVideo_urlTv).setVisibility(View.VISIBLE);
-        findViewById(R.id.myVideo_timestamp).setVisibility(View.VISIBLE);
-        findViewById(R.id.myVideo_timestampTv).setVisibility(View.VISIBLE);
-        findViewById(R.id.myVideo_pwd).setVisibility(View.VISIBLE);
-        findViewById(R.id.myVideo_pwdTv).setVisibility(View.VISIBLE);*/
-
-        findViewById(R.id.btn_add_video).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(AddVideoActivity.this, "Adding videos functionality yet to be implemented", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
@@ -66,13 +52,22 @@ public class AddVideoActivity extends AppCompatActivity {
 
         myvidRef=db.collection("videos").document(docId).collection("videos");
         setUpRecyclerView();
+
+        findViewById(R.id.btn_add_video).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i =  new Intent(AddVideoActivity.this, NewVideoActivity.class);
+                i.putExtra("docId",docId);
+                startActivity(i);
+            }
+        });
     }
 
     private void setUpRecyclerView() {
         Query query = myvidRef.orderBy("seq_no", Query.Direction.ASCENDING);
 
-        FirestoreRecyclerOptions<MyVideo> options= new FirestoreRecyclerOptions.Builder<MyVideo>()
-                .setQuery(query,MyVideo.class)
+        FirestoreRecyclerOptions<Video> options= new FirestoreRecyclerOptions.Builder<Video>()
+                .setQuery(query,Video.class)
                 .build();
 
         adapter = new AddVideoAdapter(options);

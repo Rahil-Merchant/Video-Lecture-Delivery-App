@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".AddCourseActivity">
+
+<android.support.design.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddCourseActivity">
+    android:layout_above="@id/nav_view"
+    android:fitsSystemWindows="true"
+    >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/course_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+
+        android:layout_gravity="top"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn_add_course"
@@ -21,3 +31,17 @@
         app:backgroundTint="@color/fui_bgGitHub" />
 
 </android.support.design.widget.CoordinatorLayout>
+
+<android.support.design.widget.BottomNavigationView
+    android:id="@+id/nav_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:layout_alignParentBottom="true"
+    android:background="?android:attr/windowBackground"
+    android:foreground="?attr/selectableItemBackground"
+    app:menu="@menu/bottom_nav_menu" />
+
+
+
+</RelativeLayout>

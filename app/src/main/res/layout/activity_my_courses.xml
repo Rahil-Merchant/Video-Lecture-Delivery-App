@@ -1,24 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MyCoursesActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/MyCourse_recycler_view"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_above="@id/nav_view"
+        android:fitsSystemWindows="true"
+        >
 
-    <TextView
-        android:id="@+id/my_courses_empty"
-        android:layout_width="wrap_content"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/MyCourse_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_gravity="top"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No Course Purchased Yet"
-        android:layout_centerInParent="true"
-        android:textSize="18sp"
-        android:textColor="#222"
-        android:visibility="gone"/>
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:background="?android:attr/windowBackground"
+        android:foreground="?attr/selectableItemBackground"
+        app:menu="@menu/bottom_nav_menu" />
 
-</android.support.design.widget.CoordinatorLayout>
+
+
+</RelativeLayout>
+
+
+

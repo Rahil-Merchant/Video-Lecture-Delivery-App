@@ -2,6 +2,7 @@ package com.example.gumptionlabs;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ public class AddCourseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_course);
         setTitle("Edit Courses");
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setVisibility(View.GONE);
         FloatingActionButton fabAddCourse = findViewById(R.id.btn_add_course);
         fabAddCourse.setOnClickListener(new View.OnClickListener() {
             @Override

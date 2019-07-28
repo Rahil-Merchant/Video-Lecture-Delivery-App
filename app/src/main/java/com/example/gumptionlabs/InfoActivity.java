@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -90,7 +91,7 @@ public class InfoActivity extends AppCompatActivity {
                 date = day + "/" + month + "/" + year;
                 Toast.makeText(InfoActivity.this, date, Toast.LENGTH_SHORT).show();
                 mDisplayDate.setText(date);
-                mDisplayDate.setTextColor(getResources().getColor(R.color.black));
+                mDisplayDate.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.fui_bgGitHub));
             }
         };
 
@@ -147,20 +148,6 @@ public class InfoActivity extends AppCompatActivity {
 
         if(user!=null)
         {
-            /*RTDB
-            com.example.gumptionlabs.infoDatabaseWrite iDb = new com.example.gumptionlabs.infoDatabaseWrite(user.getEmail(),imei,fname,lname,mob,date);
-            dbInfo.child("users").child(user.getUid()).setValue(iDb).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    Toast.makeText(InfoActivity.this, "Details Added", Toast.LENGTH_SHORT).show();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(InfoActivity.this, "Unexpected Error", Toast.LENGTH_SHORT).show();
-                }
-            });*/
-
             //Firestore
 
             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();

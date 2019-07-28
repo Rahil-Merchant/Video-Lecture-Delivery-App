@@ -18,9 +18,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PurchaseCourseActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     String name, amt, vidCount, desc, docId, payment_mode, uid, email, purchase_timestamp;
@@ -29,6 +32,7 @@ public class PurchaseCourseActivity extends AppCompatActivity implements Adapter
     SimpleDateFormat s;
     int amount = 0;
     FirebaseUser user;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +90,12 @@ public class PurchaseCourseActivity extends AppCompatActivity implements Adapter
                 @Override
                 public void onClick(View v) {
                     purchase_timestamp= s.format(new Date());
+                    //setting isPaid flag
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("isPaid", true);
+                    db.collection("users").document(uid)
+                            .set(data, SetOptions.merge());
+
                     writeCourseDoc();
                 }
             });

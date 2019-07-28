@@ -12,18 +12,17 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-public class AddVideoAdapter extends FirestoreRecyclerAdapter<MyVideo, AddVideoAdapter.AddVideoHolder> {
+public class AddVideoAdapter extends FirestoreRecyclerAdapter<Video, AddVideoAdapter.AddVideoHolder> {
 
     private OnItemClickListener listener;
-    public AddVideoAdapter(@NonNull FirestoreRecyclerOptions<MyVideo> options) {
+    public AddVideoAdapter(@NonNull FirestoreRecyclerOptions<Video> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull AddVideoHolder holder, int position, @NonNull MyVideo model) {
+    protected void onBindViewHolder(@NonNull AddVideoHolder holder, int position, @NonNull Video model) {
         holder.name_tv.setText(model.getVideo_Name());
         holder.timestamp_tv.setText(model.getTimestamp().toString());
-        holder.timestamp_tv.setVisibility(View.GONE);
         holder.length_tv.setText(String.valueOf(model.getLength()));
         holder.password_tv.setText(String.valueOf(model.getPassword()));
         holder.url_tv.setText(String.valueOf(model.getVideo_URL()));

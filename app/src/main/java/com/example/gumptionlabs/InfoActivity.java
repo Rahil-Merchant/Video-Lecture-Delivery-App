@@ -34,9 +34,9 @@ import java.util.regex.Pattern;
 public class InfoActivity extends AppCompatActivity {
 
 
-    int year, month, day;
-    private TextView mDisplayDate;
-    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    //int year, month, day;
+    //private TextView mDisplayDate;
+    //private DatePickerDialog.OnDateSetListener mDateSetListener;
     String imei,date;
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
@@ -55,7 +55,7 @@ public class InfoActivity extends AppCompatActivity {
         lnameEt =findViewById(R.id.infoLname);
         mobEt =findViewById(R.id.infoMob);
         //First time imei
-        mDisplayDate=findViewById(R.id.infoDob);
+       // mDisplayDate=findViewById(R.id.infoDob);
         TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         if(telephonyManager!=null)
         imei=telephonyManager.getDeviceId(); //permission requested in splash
@@ -65,7 +65,7 @@ public class InfoActivity extends AppCompatActivity {
         }
 
 //date-picker
-        findViewById(R.id.infoDob).setOnClickListener(new View.OnClickListener() {
+       /* findViewById(R.id.infoDob).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -93,7 +93,7 @@ public class InfoActivity extends AppCompatActivity {
                 mDisplayDate.setText(date);
                 mDisplayDate.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.fui_bgGitHub));
             }
-        };
+        };*/
 
         findViewById(R.id.infoProceed).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,11 +131,11 @@ public class InfoActivity extends AppCompatActivity {
             return;
         }
 
-        if(date.isEmpty())
+      /*  if(date.isEmpty())
         {
             mDisplayDate.setText("Tap to Select your Date of Birth");
             return;
-        }
+        }*/
 
        /* if(year>=2006)
         {
@@ -153,7 +153,7 @@ public class InfoActivity extends AppCompatActivity {
             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
             DocumentReference uidRef = rootRef.collection("users").document(uid);
-            infoDatabaseWrite iDb = new infoDatabaseWrite(user.getEmail(),imei,fname,lname,mob,date);
+            infoDatabaseWrite iDb = new infoDatabaseWrite(user.getEmail(),imei,fname,lname,mob);
             uidRef.set(iDb).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {

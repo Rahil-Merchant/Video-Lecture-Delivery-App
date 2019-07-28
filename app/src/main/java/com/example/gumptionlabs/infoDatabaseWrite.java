@@ -1,19 +1,18 @@
 package com.example.gumptionlabs;
 
 public class infoDatabaseWrite {
-    private String email,imei,fname,uname,mob,dob;
+    private String email,imei,fname,uname,mob;
 
     public infoDatabaseWrite(){
 
     }
 
-    public infoDatabaseWrite(String email, String imei, String fname, String uname, String mob, String dob) {
+    public infoDatabaseWrite(String email, String imei, String fname, String uname, String mob) {
         this.email = email;
         this.imei = imei;
         this.fname = fname;
         this.uname = uname;
         this.mob = mob;
-        this.dob = dob;
     }
 
     public String getEmail() {
@@ -34,10 +33,6 @@ public class infoDatabaseWrite {
 
     public String getMob() {
         return mob;
-    }
-
-    public String getDob() {
-        return dob;
     }
 }
 

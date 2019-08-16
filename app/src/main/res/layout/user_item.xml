@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp"
+    app:cardBackgroundColor="#a6f5e0"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:padding="8dp"
+    app:cardElevation="@dimen/_8dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/userList_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center_horizontal"
+            android:maxLines="1"
+            android:text="User Name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#3a0d05" />
+
+        <TextView
+            android:id="@+id/userList_emailTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userList_name"
+            android:fontFamily="sans-serif-thin"
+            android:text="Email ID : "
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="7dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+        <TextView
+            android:id="@+id/userList_email"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userList_name"
+            android:layout_toEndOf="@id/userList_emailTv"
+            android:fontFamily="sans-serif-thin"
+            android:text="email"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+        <TextView
+            android:id="@+id/userList_phoneTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userList_emailTv"
+            android:background="@drawable/ic_phone_black_24dp"
+            android:layout_marginTop="5dp"
+            android:width="10dp"
+            android:height="10dp"
+            android:layout_marginRight="7dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/userList_mobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userList_emailTv"
+            android:layout_toEndOf="@id/userList_phoneTv"
+            android:fontFamily="sans-serif-thin"
+            android:layout_marginTop="5dp"
+            android:text="mob no"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/userList_imeiTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userList_phoneTv"
+            android:text="IMEI : "
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/userList_imei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userList_phoneTv"
+            android:fontFamily="sans-serif-thin"
+            android:layout_toEndOf="@id/userList_imeiTv"
+            android:text="imei no"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/userList_createdOnTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userList_imeiTv"
+            android:layout_alignParentStart="true"
+            android:text="Created On : "
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/userList_createdOn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userList_imeiTv"
+            android:layout_toEndOf="@id/userList_createdOnTv"
+            android:fontFamily="sans-serif-thin"
+            android:text="time"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/userList_lastLoginTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userList_createdOnTv"
+            android:layout_alignParentStart="true"
+            android:text="Last Login : "
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/userList_lastLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userList_createdOnTv"
+            android:layout_toEndOf="@id/userList_lastLoginTv"
+            android:fontFamily="sans-serif-thin"
+            android:text="time"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/userList_isPaidTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userList_lastLoginTv"
+            android:layout_alignParentStart="true"
+            android:text="Paid User : "
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/userList_isPaid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userList_lastLoginTv"
+            android:layout_toEndOf="@id/userList_isPaidTv"
+            android:fontFamily="sans-serif-thin"
+            android:text="✔ or ❌"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

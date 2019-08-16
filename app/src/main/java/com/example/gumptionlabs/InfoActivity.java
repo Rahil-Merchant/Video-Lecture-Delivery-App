@@ -27,7 +27,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,13 +39,10 @@ public class InfoActivity extends AppCompatActivity {
     //int year, month, day;
     //private TextView mDisplayDate;
     //private DatePickerDialog.OnDateSetListener mDateSetListener;
-    String imei,date;
+    String imei,created_time,last_login;
     private FirebaseAuth mAuth;
-    private FirebaseDatabase firebaseDatabase;
-    DatabaseReference dbInfo;
-    EditText fnameEt;
-    EditText lnameEt;
-    EditText mobEt;
+    EditText fnameEt,lnameEt,mobEt;
+    SimpleDateFormat s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +53,7 @@ public class InfoActivity extends AppCompatActivity {
         mAuth= FirebaseAuth.getInstance();
         lnameEt =findViewById(R.id.infoLname);
         mobEt =findViewById(R.id.infoMob);
+        s= new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         //First time imei
        // mDisplayDate=findViewById(R.id.infoDob);
         TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
@@ -63,37 +63,6 @@ public class InfoActivity extends AppCompatActivity {
         {
             imei="error";
         }
-
-//date-picker
-       /* findViewById(R.id.infoDob).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Calendar cal = Calendar.getInstance();
-                year = cal.get(Calendar.YEAR);
-                month = cal.get(Calendar.MONTH);
-                day = cal.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog dialog = new DatePickerDialog(
-                        InfoActivity.this,
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        mDateSetListener,
-                        year,month,day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-            }
-        });
-
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-            //    Log.d(TAG, "onDateSet: dd/mm/yyy: " + day + "/" + month + "/" + year);
-                date = day + "/" + month + "/" + year;
-                Toast.makeText(InfoActivity.this, date, Toast.LENGTH_SHORT).show();
-                mDisplayDate.setText(date);
-                mDisplayDate.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.fui_bgGitHub));
-            }
-        };*/
 
         findViewById(R.id.infoProceed).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,18 +100,6 @@ public class InfoActivity extends AppCompatActivity {
             return;
         }
 
-      /*  if(date.isEmpty())
-        {
-            mDisplayDate.setText("Tap to Select your Date of Birth");
-            return;
-        }*/
-
-       /* if(year>=2006)
-        {
-            mDisplayDate.setText("Date of Birth must be prior to January 1, 2006");
-            return;
-        }*/
-
         FirebaseUser user = mAuth.getCurrentUser();
 
 
@@ -151,9 +108,12 @@ public class InfoActivity extends AppCompatActivity {
             //Firestore
 
             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            created_time = s.format(new Date());
+            last_login = s.format(new Date());
+            Boolean isPaid = false;
             FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
             DocumentReference uidRef = rootRef.collection("users").document(uid);
-            infoDatabaseWrite iDb = new infoDatabaseWrite(user.getEmail(),imei,fname,lname,mob);
+            infoDatabaseWrite iDb = new infoDatabaseWrite(user.getEmail(),imei,fname,lname,mob,created_time,last_login,isPaid);
             uidRef.set(iDb).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -167,8 +127,6 @@ public class InfoActivity extends AppCompatActivity {
                     Toast.makeText(InfoActivity.this, "Unexpected Error, Check Your Internet Connection", Toast.LENGTH_SHORT).show();
                 }
             });
-
-
         }
         else
         {

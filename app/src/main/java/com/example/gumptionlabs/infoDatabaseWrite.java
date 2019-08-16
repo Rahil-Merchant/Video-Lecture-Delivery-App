@@ -1,18 +1,22 @@
 package com.example.gumptionlabs;
 
 public class infoDatabaseWrite {
-    private String email,imei,fname,uname,mob;
+    private String email,imei,fname,lname,mob,created_time,last_login;
+    private Boolean isPaid;
 
     public infoDatabaseWrite(){
 
     }
 
-    public infoDatabaseWrite(String email, String imei, String fname, String uname, String mob) {
+    public infoDatabaseWrite(String email, String imei, String fname, String lname, String mob, String created_time, String last_login, Boolean isPaid) {
         this.email = email;
         this.imei = imei;
         this.fname = fname;
-        this.uname = uname;
+        this.lname = lname;
         this.mob = mob;
+        this.created_time = created_time;
+        this.last_login = last_login;
+        this.isPaid = isPaid;
     }
 
     public String getEmail() {
@@ -27,12 +31,24 @@ public class infoDatabaseWrite {
         return fname;
     }
 
-    public String getUname() {
-        return uname;
+    public String getLname() {
+        return lname;
     }
 
     public String getMob() {
         return mob;
+    }
+
+    public String getCreated_time() {
+        return created_time;
+    }
+
+    public String getLast_login() {
+        return last_login;
+    }
+
+    public Boolean getIsPaid() {
+        return isPaid;
     }
 }
 

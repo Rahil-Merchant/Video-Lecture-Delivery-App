@@ -89,6 +89,12 @@ public class AddVideoActivity extends AppCompatActivity {
                 Toast.makeText(AddVideoActivity.this, "Video Deleted", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
+
+        adapter.setOnClickListener(new AddVideoAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+            }
+        });
     }
 
     @Override

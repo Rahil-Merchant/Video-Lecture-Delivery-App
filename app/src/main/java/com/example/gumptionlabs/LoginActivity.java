@@ -1,5 +1,6 @@
 package com.example.gumptionlabs;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -40,11 +41,18 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
     FirebaseAuth mAuth;
     private String imei,imei1;
+    String last_login;
     EditText inEmailEt, inPasswordEt;
     ProgressBar Pbar;
     FirebaseUser user;
@@ -52,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     int RC_SIGNIN = 0;
     GoogleApiClient mGoogleApiClient;
     private FirebaseFirestore db;
+    SimpleDateFormat s;
     //TextView username_header;
 
     @Override
@@ -83,6 +92,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mGoogleAuth = GoogleSignIn.getClient(this,gso);
         db=FirebaseFirestore.getInstance();
+        s= new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
     }
 
     private void gsignIn()
@@ -166,10 +176,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Pbar.setVisibility(View.GONE);
                 user = mAuth.getCurrentUser();
                 if (user != null && user.getEmail().equals("rahil.merchant69@nmims.edu.in")) {
+                    setLast_login();
                     finish();
                     startActivity(new Intent(getApplicationContext(),MasterActivity.class));
                     return;
                 }
+                setLast_login();
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 final DocumentReference docRef=  db.collection("users").document(uid);
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -260,6 +272,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             // Sign in success, update UI with the signed-in user's information
                             //Log.d("TAG", "signInWithCredential:success");
                             else {
+                                setLast_login();
                                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                 final DocumentReference docRef=  db.collection("users").document(uid);
                                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -335,6 +348,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Toast.makeText(this, "Connection Failed", Toast.LENGTH_SHORT).show();
     }
 
+    @SuppressLint("MissingPermission")
     private void verifyIMEI(){
         TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -375,6 +389,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
+    }
+
+    void setLast_login(){
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        last_login = s.format(new Date());
+        Map<String, Object> data = new HashMap<>();
+        data.put("last_login", last_login);
+        db.collection("users").document(uid)
+                .set(data, SetOptions.merge());
     }
 
 }

@@ -8,14 +8,21 @@
     tools:context=".MasterActivity">
 
     <Button
-        android:id="@+id/add_course"
+        android:id="@+id/add_course_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="Edit Courses" />
 
     <Button
-        android:id="@+id/masterLogout"
+        android:id="@+id/user_list_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="User List" />
+
+    <Button
+        android:id="@+id/masterLogout_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"

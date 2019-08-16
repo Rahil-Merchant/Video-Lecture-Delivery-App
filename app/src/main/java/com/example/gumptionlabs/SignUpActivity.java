@@ -17,13 +17,20 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText upEmailEt, upPasswordEt;
-    ProgressBar upPbar;
+    //ProgressBar upPbar;
     private FirebaseAuth mAuth;
-    FirebaseUser user;
+    //FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +87,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  //So that we dont return to login screen after pressing back button
                     //startActivity(intent);
                     //Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
+
                     FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -87,31 +95,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             //FirebaseAuth.getInstance().signOut();
                             startActivity(new Intent(SignUpActivity.this, InfoActivity.class));
                             finish();
-
                         }
                     });
 
-                    /*if(user.isEmailVerified())
-            {
-                tv.setText("Email has been verified");
-                tv.setTextColor(Color.BLACK);
-            }
-            else
-            {
-                tv.setText("Click to verify your email");
-                tv.setTextColor(Color.RED);
-                tv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(getContext(), "Verification mail sent", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                });
-            }*/
 
                 }
                 else

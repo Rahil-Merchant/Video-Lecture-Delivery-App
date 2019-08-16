@@ -9,6 +9,7 @@
     android:layout_marginTop="10dp"
     android:layout_marginEnd="10dp"
     android:padding="10dp"
+    app:cardElevation="@dimen/_8dp"
     >
 
     <RelativeLayout
@@ -27,7 +28,7 @@
             android:gravity="center_horizontal"
             android:maxLines="1"
             android:text="placeholder course name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="#3a0d05" />
 
         <TextView
@@ -37,7 +38,7 @@
             android:layout_below="@id/MyCourse_name"
             android:fontFamily="sans-serif-thin"
             android:text="Payment Mode : "
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <TextView
             android:id="@+id/MyCourse_mode"
@@ -47,7 +48,7 @@
             android:layout_toEndOf="@id/myCourse_modeTv"
             android:fontFamily="sans-serif-thin"
             android:text="placeholder mode"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <TextView
             android:id="@+id/myCourse_rupee"
@@ -56,7 +57,7 @@
             android:layout_below="@id/MyCourse_name"
             android:layout_toStartOf="@id/myCourse_amount"
             android:text="₹ "
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <TextView
             android:id="@+id/myCourse_amount"
@@ -67,7 +68,7 @@
             android:layout_toStartOf="@id/myCourse_amount"
             android:fontFamily="sans-serif-light"
             android:text="placeholder video amount"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <TextView
             android:id="@+id/myCourse_timestampTv"

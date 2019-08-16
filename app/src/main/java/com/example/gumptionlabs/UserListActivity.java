@@ -1,5 +1,6 @@
 package com.example.gumptionlabs;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,7 +48,25 @@ public class UserListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
 
-                Toast.makeText(UserListActivity.this, "to user mgmt activity", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserListActivity.this, "Click on either of the below two buttons", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAssignClick(DocumentSnapshot documentSnapshot, int position) {
+                String id = documentSnapshot.getId();
+                String email = documentSnapshot.getString("email");
+                Intent i = new Intent(UserListActivity.this, AssignCourseActivity.class);
+                i.putExtra("userId",id);
+                i.putExtra("email",email);
+                startActivity(i);
+            }
+
+            @Override
+            public void onViewPurchasedClick(DocumentSnapshot documentSnapshot, int position) {
+                String id = documentSnapshot.getId();
+                Intent i = new Intent(UserListActivity.this, ViewPurchasedActivity.class);
+                i.putExtra("userId",id);
+                startActivity(i);
             }
         });
     }

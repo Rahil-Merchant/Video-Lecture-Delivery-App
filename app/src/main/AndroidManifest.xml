@@ -12,9 +12,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserListActivity"
-            android:parentActivityName=".MasterActivity"
+        <activity android:name=".ViewPurchasedActivity"
+            android:parentActivityName=".UserListActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".AssignCourseActivity"
+            android:parentActivityName=".UserListActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ManageUserActivity"
+            android:parentActivityName=".UserListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserListActivity"
+            android:parentActivityName=".MasterActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".PlayerActivity" />
         <activity
             android:name=".NewVideoActivity"

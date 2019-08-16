@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -25,8 +26,10 @@ public class UserAdapter extends FirestoreRecyclerAdapter<UserList, UserAdapter.
 
         if(isPaid.equals("true"))
             holder.isPaid_tv.setText("✔");
-        else
+        else {
             holder.isPaid_tv.setText("❌");
+            holder.viewPurchasedTv.setVisibility(View.GONE);
+        }
 
         holder.name_tv.setText(name);
         holder.imei_tv.setText(model.getImei());
@@ -52,6 +55,8 @@ public class UserAdapter extends FirestoreRecyclerAdapter<UserList, UserAdapter.
         TextView isPaid_tv;
         TextView created_time_tv;
         TextView email_tv;
+        TextView assignTv;
+        TextView viewPurchasedTv;
 
 
 
@@ -65,6 +70,8 @@ public class UserAdapter extends FirestoreRecyclerAdapter<UserList, UserAdapter.
             isPaid_tv=itemView.findViewById(R.id.userList_isPaid);
             created_time_tv=itemView.findViewById(R.id.userList_createdOn);
             email_tv=itemView.findViewById(R.id.userList_email);
+            assignTv=itemView.findViewById(R.id.userList_assign);
+            viewPurchasedTv=itemView.findViewById(R.id.userList_viewPurchased);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,11 +83,49 @@ public class UserAdapter extends FirestoreRecyclerAdapter<UserList, UserAdapter.
                 }
             });
 
+            assignTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null){
+                        listener.onAssignClick(getSnapshots().getSnapshot(position),position);
+                    }
+                }
+            });
+
+            viewPurchasedTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null){
+                        listener.onViewPurchasedClick(getSnapshots().getSnapshot(position),position);
+                    }
+                }
+            });
+
+            assignTv.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Toast.makeText(v.getContext(), "Assign a course to a user", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
+
+            viewPurchasedTv.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Toast.makeText(v.getContext(), "View purchase history of a user", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
+
         }
     }
 
     public interface OnItemClickListener{
         void onItemClick(DocumentSnapshot documentSnapshot, int position);
+        void onAssignClick(DocumentSnapshot documentSnapshot, int position);
+        void onViewPurchasedClick(DocumentSnapshot documentSnapshot, int position);
     }
 
     public void setOnClickListener(UserAdapter.OnItemClickListener listener){

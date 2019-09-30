@@ -3,14 +3,14 @@ package com.example.gumptionlabs;
 public class UserList {
 
     private String created_time,email,fname,imei,last_login,lname,mob;
-    private Boolean isPaid;
+    private Boolean isPaid, isDisabled;
 
     public UserList()
     {
         //empty const needed
     }
 
-    public UserList(String created_time, String email, String fname, String imei, String last_login, String lname, String mob, Boolean isPaid) {
+    public UserList(String created_time, String email, String fname, String imei, String last_login, String lname, String mob, Boolean isPaid, Boolean isDisabled) {
         this.created_time = created_time;
         this.email = email;
         this.fname = fname;
@@ -19,6 +19,7 @@ public class UserList {
         this.lname = lname;
         this.mob = mob;
         this.isPaid = isPaid;
+        this.isDisabled = isPaid;
     }
 
     public String getCreated_time() {
@@ -51,6 +52,10 @@ public class UserList {
 
     public Boolean getIsPaid() {
         return isPaid;
+    }
+
+    public Boolean getIsDisabled() {
+        return isDisabled;
     }
 }
 

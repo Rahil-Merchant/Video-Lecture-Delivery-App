@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     int RC_SIGNIN = 0;
     GoogleApiClient mGoogleApiClient;
     private FirebaseFirestore db;
+    String isDisabled,isDeleted;
     SimpleDateFormat s;
     //TextView username_header;
 
@@ -182,6 +183,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     return;
                 }
                 setLast_login();
+                handleDisabled_Deleted();
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 final DocumentReference docRef=  db.collection("users").document(uid);
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -273,6 +275,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             //Log.d("TAG", "signInWithCredential:success");
                             else {
                                 setLast_login();
+                                handleDisabled_Deleted();
                                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                 final DocumentReference docRef=  db.collection("users").document(uid);
                                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -398,6 +401,55 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         data.put("last_login", last_login);
         db.collection("users").document(uid)
                 .set(data, SetOptions.merge());
+    }
+
+    void handleDisabled_Deleted(){
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final DocumentReference docRef=  db.collection("users").document(uid);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null && document.exists()) {
+                        isDisabled = document.get("isDisabled").toString().trim();
+                        isDeleted = document.get("isDeleted").toString().trim();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                        isDisabled = "false";
+                        isDeleted = "false";
+                    }
+                } else {
+                    Toast.makeText(LoginActivity.this, "Can't fetch data", Toast.LENGTH_SHORT).show();
+                    isDisabled = "False";
+                    isDeleted = "False";
+                }
+            }
+        });
+
+        if(isDeleted.equals("true")){
+            final DocumentReference userRef=  db.collection("users").document(uid);
+            //deleting user data
+            userRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(LoginActivity.this, "Your account has been deleted", Toast.LENGTH_LONG).show();
+                    mAuth.getCurrentUser().delete();
+                    mAuth.signOut();
+                    finish();
+                    startActivity(new Intent(LoginActivity.this,LoginActivity.class));
+                }
+            });
+        }
+
+        if(isDisabled.equals("true")){
+            Toast.makeText(this, "Your account has been disabled, please contact admin for details", Toast.LENGTH_LONG).show();
+            mAuth.signOut();
+            finish();
+            startActivity(new Intent(LoginActivity.this,LoginActivity.class));
+
+        }
+
     }
 
 }

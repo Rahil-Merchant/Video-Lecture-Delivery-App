@@ -110,10 +110,13 @@ public class InfoActivity extends AppCompatActivity {
             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             created_time = s.format(new Date());
             last_login = s.format(new Date());
+            //flags below
             Boolean isPaid = false;
+            Boolean isDisabled = false;
+            Boolean isDeleted = false;
             FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
             DocumentReference uidRef = rootRef.collection("users").document(uid);
-            infoDatabaseWrite iDb = new infoDatabaseWrite(user.getEmail(),imei,fname,lname,mob,created_time,last_login,isPaid);
+            infoDatabaseWrite iDb = new infoDatabaseWrite(user.getEmail(),imei,fname,lname,mob,created_time,last_login,isPaid,isDisabled,isDeleted);
             uidRef.set(iDb).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {

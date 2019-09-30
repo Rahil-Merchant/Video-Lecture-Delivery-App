@@ -10,11 +10,18 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.model.value.FieldValueOptions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserListActivity extends AppCompatActivity {
 
@@ -67,6 +74,51 @@ public class UserListActivity extends AppCompatActivity {
                 Intent i = new Intent(UserListActivity.this, ViewPurchasedActivity.class);
                 i.putExtra("userId",id);
                 startActivity(i);
+            }
+
+            @Override
+            public void onDisableClick(DocumentSnapshot documentSnapshot, int position) {
+                String id = documentSnapshot.getId();
+                Map<String, Object> data = new HashMap<>();
+                data.put("isDisabled", true);
+                db.collection("users").document(id)
+                        .set(data, SetOptions.merge())
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(UserListActivity.this, "Account Locked", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+
+            @Override
+            public void onDeleteClick(DocumentSnapshot documentSnapshot, int position) {
+                String id = documentSnapshot.getId();
+                Map<String, Object> data = new HashMap<>();
+                data.put("isDeleted", true);
+                db.collection("users").document(id)
+                        .set(data, SetOptions.merge())
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(UserListActivity.this, "Account Deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+
+            @Override
+            public void onEnableClick(DocumentSnapshot documentSnapshot, int position) {
+                String id = documentSnapshot.getId();
+                Map<String, Object> data = new HashMap<>();
+                data.put("isDisabled", false);
+                db.collection("users").document(id)
+                        .update(data)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(UserListActivity.this, "Account Unlocked", Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
         });
     }

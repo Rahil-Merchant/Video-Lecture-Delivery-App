@@ -170,6 +170,45 @@
             android:layout_toEndOf="@id/userList_assign"
             android:background="@drawable/ic_remove_red_eye_black_24dp"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:width="10dp"
+            android:height="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/userList_disable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userList_isPaidTv"
+            android:layout_toEndOf="@id/userList_viewPurchased"
+            android:background="@drawable/ic_lock_open_black_24dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:width="10dp"
+            android:height="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/userList_enable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userList_isPaidTv"
+            android:layout_toEndOf="@id/userList_disable"
+            android:background="@drawable/ic_lock_black_24dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:width="10dp"
+            android:height="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/userList_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userList_isPaidTv"
+            android:layout_toEndOf="@id/userList_enable"
+            android:background="@drawable/ic_delete_forever_black_24dp"
+            android:layout_marginTop="5dp"
             android:width="10dp"
             android:height="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"/>

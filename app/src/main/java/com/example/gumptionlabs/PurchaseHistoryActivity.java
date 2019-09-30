@@ -4,79 +4,80 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class StoreActivity extends AppCompatActivity {
+public class PurchaseHistoryActivity extends AppCompatActivity {
 
-    FloatingActionButton fab;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference courseRef = db.collection("videos");
-    private CourseAdapter adapter;
+    FirebaseUser user;
+    private CollectionReference mycourseRef;
+    private PurchaseHistoryAdapter adapter;
+    String uid;
+    // private int mMenuId;
     BottomNavigationView navView;
     GoogleSignInClient mGoogleAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_course);
-        setTitle("Store");
+        setContentView(R.layout.activity_my_courses);
+        setTitle("Purchase History");
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         mGoogleAuth = GoogleSignIn.getClient(this,gso);
-        fab=findViewById(R.id.btn_add_course);
-        fab.setVisibility(View.GONE);  //ignore warning, this works
-        setUpRecylerView();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user!=null)
+        {
+            uid = user.getUid();
+        }
+        mycourseRef=db.collection("users").document(uid).collection("courses_purchased");
         navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navView.getMenu().findItem(R.id.navigation_store).setChecked(true);
+        navView.getMenu().findItem(R.id.navigation_my_courses).setChecked(true);
+        setUpRecyclerView();
     }
 
-    private void setUpRecylerView() {
-        Query query = courseRef.whereGreaterThan("amount",0).orderBy("amount", Query.Direction.ASCENDING);
+    private void setUpRecyclerView() {
+        Query query = mycourseRef.orderBy("amount", Query.Direction.ASCENDING);
 
-        FirestoreRecyclerOptions<Course> options= new FirestoreRecyclerOptions.Builder<Course>()
-                .setQuery(query,Course.class)
+        FirestoreRecyclerOptions<MyCourse> options= new FirestoreRecyclerOptions.Builder<MyCourse>()
+                .setQuery(query,MyCourse.class)
                 .build();
 
-        adapter = new CourseAdapter(options);
-        RecyclerView recyclerView = findViewById(R.id.course_recycler_view);
+        adapter = new PurchaseHistoryAdapter(options);
+        RecyclerView recyclerView = findViewById(R.id.MyCourse_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnClickListener(new CourseAdapter.OnItemClickListener() {
+        /*adapter.setOnClickListener(new MyCourseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-                //Course course = documentSnapshot.toObject(Course.class);
+                // MyCourse mycourse = documentSnapshot.toObject(MyCourse.class);
                 String id = documentSnapshot.getId(); //document id
-                //String path = documentSnapshot.getReference().getPath(); //path to doc
-                Intent i = new Intent(StoreActivity.this, PurchaseCourseActivity.class);
-                i.putExtra("courseId",id);
-                i.putExtra("courseName",documentSnapshot.getString("name"));
-                i.putExtra("courseAmount",documentSnapshot.get("amount").toString());
-                i.putExtra("courseDesc",documentSnapshot.getString("description"));
-                i.putExtra("courseVidCount",documentSnapshot.get("video_count").toString());
+                // String path = documentSnapshot.getReference().getPath(); //path to doc
+                Intent i = new Intent(MyCoursesActivity.this, MyVideoActivity.class);
+                i.putExtra("mycourseId",id);
+                // i.putExtra("mycourseName",documentSnapshot.getString("name"));
                 startActivity(i);
             }
-        });
+        });*/
     }
 
     @Override
@@ -95,25 +96,28 @@ public class StoreActivity extends AppCompatActivity {
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+            // mMenuId = item.getItemId();
             for (int i = 0; i < navView.getMenu().size(); i++) {
                 MenuItem menuItem = navView.getMenu().getItem(i);
                 boolean isChecked = menuItem.getItemId() == item.getItemId();
                 menuItem.setChecked(isChecked);
             }
+
             switch (item.getItemId()) {
-                case R.id.navigation_my_courses:{
-                    startActivity(new Intent(StoreActivity.this,MyCoursesActivity.class));
+                case R.id.navigation_store:{
+                    startActivity(new Intent(PurchaseHistoryActivity.this,StoreActivity.class));
                     return true;
                 }
-                case R.id.navigation_store: {
+                case R.id.navigation_my_courses: {
+                    startActivity(new Intent(PurchaseHistoryActivity.this,MyCoursesActivity.class));
                     return true;
                 }
                 case R.id.navigation_purchase_history: {
-                    startActivity(new Intent(StoreActivity.this,PurchaseHistoryActivity.class));
                     return true;
                 }
                 case R.id.navigation_free_courses: {
-                    startActivity(new Intent(StoreActivity.this,FreeCoursesActivity.class));
+                    startActivity(new Intent(PurchaseHistoryActivity.this,FreeCoursesActivity.class));
                     return true;
                 }
 

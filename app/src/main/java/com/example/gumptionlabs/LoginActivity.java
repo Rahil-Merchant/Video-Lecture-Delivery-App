@@ -183,7 +183,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     return;
                 }
                 setLast_login();
-                handleDisabled_Deleted();
+                //handleDisabled_Deleted();
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 final DocumentReference docRef=  db.collection("users").document(uid);
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -275,7 +275,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             //Log.d("TAG", "signInWithCredential:success");
                             else {
                                 setLast_login();
-                                handleDisabled_Deleted();
+                                //handleDisabled_Deleted();
                                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                 final DocumentReference docRef=  db.collection("users").document(uid);
                                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -403,7 +403,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .set(data, SetOptions.merge());
     }
 
-    void handleDisabled_Deleted(){
+    /*void handleDisabled_Deleted(){
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final DocumentReference docRef=  db.collection("users").document(uid);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -450,6 +450,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         }
 
-    }
+    }*/
 
 }

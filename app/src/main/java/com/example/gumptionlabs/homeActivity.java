@@ -55,7 +55,7 @@ public class homeActivity extends AppCompatActivity {
 
         navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navView.getMenu().findItem(R.id.navigation_settings).setChecked(true);
+       // navView.getMenu().findItem(R.id.navigation_settings).setChecked(true);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -76,14 +76,21 @@ public class homeActivity extends AppCompatActivity {
                     startActivity(new Intent(homeActivity.this,StoreActivity.class));
                     return true;
                 }
-                case R.id.navigation_info: {
-                    String url = "http://www.gumptionlabs.com";
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(url));
-                    startActivity(i);
+                case R.id.navigation_purchase_history: {
+                    startActivity(new Intent(homeActivity.this,PurchaseHistoryActivity.class));
                     return true;
                 }
-                case R.id.navigation_settings: {
+
+                case R.id.navigation_free_courses: {
+                    startActivity(new Intent(homeActivity.this,FreeCoursesActivity.class));
+                    return true;
+                }
+
+                case R.id.navigation_logout: {
+                    FirebaseAuth.getInstance().signOut();
+                    mGoogleAuth.signOut();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     return true;
                 }
             }

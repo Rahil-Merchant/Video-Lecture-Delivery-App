@@ -76,7 +76,7 @@ public class UserListActivity extends AppCompatActivity {
                 startActivity(i);
             }
 
-            @Override
+           /* @Override
             public void onDisableClick(DocumentSnapshot documentSnapshot, int position) {
                 String id = documentSnapshot.getId();
                 Map<String, Object> data = new HashMap<>();
@@ -90,8 +90,8 @@ public class UserListActivity extends AppCompatActivity {
                             }
                         });
             }
-
-            @Override
+*/
+           /* @Override
             public void onDeleteClick(DocumentSnapshot documentSnapshot, int position) {
                 String id = documentSnapshot.getId();
                 Map<String, Object> data = new HashMap<>();
@@ -104,9 +104,9 @@ public class UserListActivity extends AppCompatActivity {
                                 Toast.makeText(UserListActivity.this, "Account Deleted", Toast.LENGTH_SHORT).show();
                             }
                         });
-            }
+            }*/
 
-            @Override
+           /* @Override
             public void onEnableClick(DocumentSnapshot documentSnapshot, int position) {
                 String id = documentSnapshot.getId();
                 Map<String, Object> data = new HashMap<>();
@@ -119,7 +119,7 @@ public class UserListActivity extends AppCompatActivity {
                                 Toast.makeText(UserListActivity.this, "Account Unlocked", Toast.LENGTH_SHORT).show();
                             }
                         });
-            }
+            }*/
         });
     }
 

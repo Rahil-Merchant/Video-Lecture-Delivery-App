@@ -12,14 +12,19 @@
         android:title="@string/title_store" />
 
     <item
-        android:id="@+id/navigation_settings"
-        android:icon="@drawable/ic_settings_black_24dp"
-        android:title="@string/title_settings" />
+        android:id="@+id/navigation_free_courses"
+        android:icon="@drawable/free_icon"
+        android:title="@string/title_free_courses" />
 
     <item
-        android:id="@+id/navigation_info"
-        android:icon="@drawable/ic_info_outline_black_24dp"
-        android:title="@string/title_info" />
+        android:id="@+id/navigation_purchase_history"
+        android:icon="@drawable/ic_history_black_24dp"
+        android:title="@string/title_purchase_history" />
+
+    <item
+        android:id="@+id/navigation_logout"
+        android:icon="@drawable/ic_power_settings_new_black_24dp"
+        android:title="@string/title_logout" />
 
 
 </menu>

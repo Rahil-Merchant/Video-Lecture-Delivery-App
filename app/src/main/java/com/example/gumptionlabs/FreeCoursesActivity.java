@@ -1,7 +1,6 @@
 package com.example.gumptionlabs;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -17,13 +16,20 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class StoreActivity extends AppCompatActivity {
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class FreeCoursesActivity extends AppCompatActivity {
 
     FloatingActionButton fab;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -32,11 +38,18 @@ public class StoreActivity extends AppCompatActivity {
     BottomNavigationView navView;
     GoogleSignInClient mGoogleAuth;
 
+    String id;
+    SimpleDateFormat s;
+    int amount = 0;
+    FirebaseUser user;
+    String name, amt, vidCount, desc, docId, uid, email, purchase_timestamp;
+    String payment_mode = "Free Course";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_course);
-        setTitle("Store");
+        setTitle("Free Courses");
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -48,10 +61,17 @@ public class StoreActivity extends AppCompatActivity {
         navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navView.getMenu().findItem(R.id.navigation_store).setChecked(true);
+
+        s= new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null){
+            email = user.getEmail();
+            uid = user.getUid();
+        }
     }
 
     private void setUpRecylerView() {
-        Query query = courseRef.whereGreaterThan("amount",0).orderBy("amount", Query.Direction.ASCENDING);
+        Query query = courseRef.whereEqualTo("amount",0).orderBy("amount", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<Course> options= new FirestoreRecyclerOptions.Builder<Course>()
                 .setQuery(query,Course.class)
@@ -66,15 +86,45 @@ public class StoreActivity extends AppCompatActivity {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 //Course course = documentSnapshot.toObject(Course.class);
-                String id = documentSnapshot.getId(); //document id
-                //String path = documentSnapshot.getReference().getPath(); //path to doc
-                Intent i = new Intent(StoreActivity.this, PurchaseCourseActivity.class);
-                i.putExtra("courseId",id);
-                i.putExtra("courseName",documentSnapshot.getString("name"));
-                i.putExtra("courseAmount",documentSnapshot.get("amount").toString());
-                i.putExtra("courseDesc",documentSnapshot.getString("description"));
-                i.putExtra("courseVidCount",documentSnapshot.get("video_count").toString());
-                startActivity(i);
+                id = documentSnapshot.getId(); //document id
+                name=documentSnapshot.getString("name");
+                purchase_timestamp= s.format(new Date());
+
+                //write course doc
+                FirebaseFirestore ref = FirebaseFirestore.getInstance();
+                DocumentReference uidRef = ref.collection("videos").document(docId).collection("purchased_by").document(uid);
+                purchaseDatabaseWrite pDb = new purchaseDatabaseWrite(amount, email, payment_mode, purchase_timestamp);
+                uidRef.set(pDb).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //write user doc
+                        FirebaseFirestore ref = FirebaseFirestore.getInstance();
+                        DocumentReference uidRef = ref.collection("users").document(uid).collection("courses_purchased").document(docId);
+                        purchaseUserDatabaseWrite pDb = new purchaseUserDatabaseWrite(name, amount, payment_mode, purchase_timestamp);
+                        uidRef.set(pDb).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(FreeCoursesActivity.this, "Courses successfully added to your courses", Toast.LENGTH_SHORT).show();
+                                finish();
+                                startActivity(new Intent(FreeCoursesActivity.this, homeActivity.class));
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(FreeCoursesActivity.this, "Unexpected Error, Check Your Internet Connection", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(FreeCoursesActivity.this, "Unexpected Error, Check Your Internet Connection", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+
+
             }
         });
     }
@@ -102,18 +152,18 @@ public class StoreActivity extends AppCompatActivity {
             }
             switch (item.getItemId()) {
                 case R.id.navigation_my_courses:{
-                    startActivity(new Intent(StoreActivity.this,MyCoursesActivity.class));
+                    startActivity(new Intent(FreeCoursesActivity.this,MyCoursesActivity.class));
                     return true;
                 }
                 case R.id.navigation_store: {
+                    startActivity(new Intent(FreeCoursesActivity.this,StoreActivity.class));
                     return true;
                 }
                 case R.id.navigation_purchase_history: {
-                    startActivity(new Intent(StoreActivity.this,PurchaseHistoryActivity.class));
+                    startActivity(new Intent(FreeCoursesActivity.this,PurchaseHistoryActivity.class));
                     return true;
                 }
                 case R.id.navigation_free_courses: {
-                    startActivity(new Intent(StoreActivity.this,FreeCoursesActivity.class));
                     return true;
                 }
 

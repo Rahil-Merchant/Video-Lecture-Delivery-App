@@ -24,7 +24,15 @@ public class CourseAdapter extends FirestoreRecyclerAdapter<Course, CourseAdapte
         holder.name_tv.setText(model.getName());
         holder.desc_tv.setText(model.getDescription());
         holder.count_tv.setText(String.valueOf(model.getVideo_count()));
-        holder.amt_tv.setText(String.valueOf(model.getAmount()));
+        int amt = model.getAmount();
+        if(amt==0){
+            holder.amt_tv.setVisibility(View.GONE);
+            holder.rupee_tv.setVisibility(View.GONE);
+        }
+        else {
+            holder.amt_tv.setText(String.valueOf(model.getAmount()));
+        }
+
     }
 
     @NonNull
@@ -44,6 +52,7 @@ public class CourseAdapter extends FirestoreRecyclerAdapter<Course, CourseAdapte
         TextView desc_tv;
         TextView count_tv;
         TextView amt_tv;
+        TextView rupee_tv;
 
         public CourseHolder(@NonNull View itemView) {
             super(itemView);
@@ -52,6 +61,7 @@ public class CourseAdapter extends FirestoreRecyclerAdapter<Course, CourseAdapte
             desc_tv=itemView.findViewById(R.id.course_desc);
             count_tv=itemView.findViewById(R.id.course_video_count);
             amt_tv=itemView.findViewById(R.id.course_amount);
+            rupee_tv=itemView.findViewById(R.id.course_rupee);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

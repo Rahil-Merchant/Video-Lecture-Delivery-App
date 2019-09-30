@@ -52,6 +52,9 @@ public class MyCourseAdapter extends FirestoreRecyclerAdapter<MyCourse, MyCourse
             timestamp_tv=itemView.findViewById(R.id.myCourse_timestamp);
             mode_tv=itemView.findViewById(R.id.MyCourse_mode);
             amt_tv=itemView.findViewById(R.id.myCourse_amount);
+            amt_tv.setVisibility(View.GONE);
+            mode_tv.setVisibility(View.GONE);
+            timestamp_tv.setVisibility(View.GONE);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

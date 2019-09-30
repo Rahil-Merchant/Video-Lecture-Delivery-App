@@ -23,15 +23,15 @@ public class UserAdapter extends FirestoreRecyclerAdapter<UserList, UserAdapter.
     protected void onBindViewHolder(@NonNull UserAdapter.UserHolder holder, int position, @NonNull UserList model) {
         String name = model.getFname() +' '+ model.getLname();
         String isPaid = model.getIsPaid().toString().trim();
-        Boolean isDis = model.getIsDisabled();
-        String isDisabled;
+        //Boolean isDis = model.getIsDisabled();
+        /*String isDisabled;
         if(isDis!=null)
         {
             isDisabled = isDis.toString().trim();
         }
         else {
             isDisabled="false";
-        }
+        }*/
 
         if(isPaid.equals("true"))
             holder.isPaid_tv.setText("✔");
@@ -40,11 +40,11 @@ public class UserAdapter extends FirestoreRecyclerAdapter<UserList, UserAdapter.
             holder.viewPurchasedTv.setVisibility(View.GONE);
         }
 
-        if(isDisabled.equals("true"))
+       /* if(isDisabled.equals("true"))
             holder.disableTv.setVisibility(View.GONE);
         else {
             holder.enableTv.setVisibility(View.GONE);
-        }
+        }*/
 
         holder.name_tv.setText(name);
         holder.imei_tv.setText(model.getImei());
@@ -72,9 +72,9 @@ public class UserAdapter extends FirestoreRecyclerAdapter<UserList, UserAdapter.
         TextView email_tv;
         TextView assignTv;
         TextView viewPurchasedTv;
-        TextView disableTv;
+        /*TextView disableTv;
         TextView enableTv;
-        TextView deleteTv;
+        TextView deleteTv;*/
 
 
         public UserHolder(@NonNull View itemView) {
@@ -89,9 +89,9 @@ public class UserAdapter extends FirestoreRecyclerAdapter<UserList, UserAdapter.
             email_tv=itemView.findViewById(R.id.userList_email);
             assignTv=itemView.findViewById(R.id.userList_assign);
             viewPurchasedTv=itemView.findViewById(R.id.userList_viewPurchased);
-            disableTv=itemView.findViewById(R.id.userList_disable);
+            /*disableTv=itemView.findViewById(R.id.userList_disable);
             deleteTv=itemView.findViewById(R.id.userList_delete);
-            enableTv=itemView.findViewById(R.id.userList_enable);
+            enableTv=itemView.findViewById(R.id.userList_enable);*/
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -123,7 +123,7 @@ public class UserAdapter extends FirestoreRecyclerAdapter<UserList, UserAdapter.
                 }
             });
 
-            disableTv.setOnClickListener(new View.OnClickListener() {
+           /* disableTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
@@ -151,7 +151,7 @@ public class UserAdapter extends FirestoreRecyclerAdapter<UserList, UserAdapter.
                         listener.onDeleteClick(getSnapshots().getSnapshot(position),position);
                     }
                 }
-            });
+            });*/
 
 
             assignTv.setOnLongClickListener(new View.OnLongClickListener() {
@@ -170,7 +170,7 @@ public class UserAdapter extends FirestoreRecyclerAdapter<UserList, UserAdapter.
                 }
             });
 
-            disableTv.setOnLongClickListener(new View.OnLongClickListener() {
+            /*disableTv.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     Toast.makeText(v.getContext(), "Lock user account", Toast.LENGTH_SHORT).show();
@@ -192,7 +192,7 @@ public class UserAdapter extends FirestoreRecyclerAdapter<UserList, UserAdapter.
                     Toast.makeText(v.getContext(), "Unlock user account", Toast.LENGTH_SHORT).show();
                     return true;
                 }
-            });
+            });*/
 
         }
     }
@@ -201,9 +201,9 @@ public class UserAdapter extends FirestoreRecyclerAdapter<UserList, UserAdapter.
         void onItemClick(DocumentSnapshot documentSnapshot, int position);
         void onAssignClick(DocumentSnapshot documentSnapshot, int position);
         void onViewPurchasedClick(DocumentSnapshot documentSnapshot, int position);
-        void onDisableClick(DocumentSnapshot documentSnapshot, int position);
+        /*void onDisableClick(DocumentSnapshot documentSnapshot, int position);
         void onEnableClick(DocumentSnapshot documentSnapshot, int position);
-        void onDeleteClick(DocumentSnapshot documentSnapshot, int position);
+        void onDeleteClick(DocumentSnapshot documentSnapshot, int position);*/
     }
 
     public void setOnClickListener(UserAdapter.OnItemClickListener listener){

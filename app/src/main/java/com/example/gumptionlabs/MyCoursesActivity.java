@@ -12,6 +12,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -28,12 +31,19 @@ public class MyCoursesActivity extends AppCompatActivity {
     String uid;
    // private int mMenuId;
     BottomNavigationView navView;
+    GoogleSignInClient mGoogleAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_courses);
         setTitle("My Courses");
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleAuth = GoogleSignIn.getClient(this,gso);
         user = FirebaseAuth.getInstance().getCurrentUser();
         if(user!=null)
         {
@@ -104,15 +114,20 @@ public class MyCoursesActivity extends AppCompatActivity {
                 case R.id.navigation_my_courses: {
                     return true;
                 }
-                case R.id.navigation_info: {
-                    String url = "http://www.gumptionlabs.com";
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(url));
-                    startActivity(i);
+                case R.id.navigation_purchase_history: {
+                    startActivity(new Intent(MyCoursesActivity.this,PurchaseHistoryActivity.class));
                     return true;
                 }
-                case R.id.navigation_settings: {
-                    startActivity(new Intent(MyCoursesActivity.this,homeActivity.class));
+                case R.id.navigation_free_courses: {
+                    startActivity(new Intent(MyCoursesActivity.this,FreeCoursesActivity.class));
+                    return true;
+                }
+
+                case R.id.navigation_logout: {
+                    FirebaseAuth.getInstance().signOut();
+                    mGoogleAuth.signOut();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     return true;
                 }
             }

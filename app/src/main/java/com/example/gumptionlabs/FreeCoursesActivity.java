@@ -42,7 +42,7 @@ public class FreeCoursesActivity extends AppCompatActivity {
     SimpleDateFormat s;
     int amount = 0;
     FirebaseUser user;
-    String name, amt, vidCount, desc, docId, uid, email, purchase_timestamp;
+    String name,uid, email, purchase_timestamp;
     String payment_mode = "Free Course";
 
     @Override
@@ -92,19 +92,19 @@ public class FreeCoursesActivity extends AppCompatActivity {
 
                 //write course doc
                 FirebaseFirestore ref = FirebaseFirestore.getInstance();
-                DocumentReference uidRef = ref.collection("videos").document(docId).collection("purchased_by").document(uid);
+                DocumentReference uidRef = ref.collection("videos").document(id).collection("purchased_by").document(uid);
                 purchaseDatabaseWrite pDb = new purchaseDatabaseWrite(amount, email, payment_mode, purchase_timestamp);
                 uidRef.set(pDb).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         //write user doc
                         FirebaseFirestore ref = FirebaseFirestore.getInstance();
-                        DocumentReference uidRef = ref.collection("users").document(uid).collection("courses_purchased").document(docId);
+                        DocumentReference uidRef = ref.collection("users").document(uid).collection("courses_purchased").document(id);
                         purchaseUserDatabaseWrite pDb = new purchaseUserDatabaseWrite(name, amount, payment_mode, purchase_timestamp);
                         uidRef.set(pDb).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(FreeCoursesActivity.this, "Courses successfully added to your courses", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(FreeCoursesActivity.this, "Course successfully added to your courses", Toast.LENGTH_LONG).show();
                                 finish();
                                 startActivity(new Intent(FreeCoursesActivity.this, homeActivity.class));
                             }

@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FreeCoursesActivity"></activity>
-        <activity android:name=".PurchaseHistoryActivity" />
+        <activity android:name=".FreeCoursesActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".PurchaseHistoryActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ViewPurchasedActivity"
             android:parentActivityName=".UserListActivity"

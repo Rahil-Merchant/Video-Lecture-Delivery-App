@@ -18,10 +18,13 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class AddVideoActivity extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private StorageReference mStorageRef;
     FirebaseUser user;
     private CollectionReference myvidRef;
     private AddVideoAdapter adapter;
@@ -32,6 +35,7 @@ public class AddVideoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_video);
 
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         setTitle("Edit Videos");
 
         if (savedInstanceState == null) {

@@ -1,5 +1,6 @@
 package com.example.gumptionlabs;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ public class MyVideoActivity extends AppCompatActivity {
     String docId,uid;
     FloatingActionButton fab;
 
+    @SuppressLint("RestrictedApi") // Added for the warning
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

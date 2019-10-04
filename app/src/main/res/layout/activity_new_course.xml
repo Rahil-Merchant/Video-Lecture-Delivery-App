@@ -2,43 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Progress_Bar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewCourseActivity"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context=".NewCourseActivity">
 
     <EditText
+        android:id="@+id/new_course_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Course Name"
-        android:inputType="text"
-        android:id="@+id/new_course_name"/>
+        android:inputType="text" />
 
     <EditText
+        android:id="@+id/new_course_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Course Description"
-        android:inputType="textMultiLine"
-        android:id="@+id/new_course_description" />
+        android:inputType="textMultiLine" />
 
     <EditText
+        android:id="@+id/new_course_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
         android:hint="Course Amount"
-        android:id="@+id/new_course_amount"/>
-    
+        android:inputType="number" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Number of Videos: "
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:layout_marginTop="16dp"/>
-    
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
     <NumberPicker
+        android:id="@+id/new_course_vidCount_nrPicker"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/new_course_vidCount_nrPicker"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

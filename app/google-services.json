@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "367411411207-epub1gifihoeh2uubq3ldn870k2o86fo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gumptionlabs",
+            "certificate_hash": "8a235532b241279d526b6b29292b22f56b99eb2c"
+          }
+        },
+        {
           "client_id": "367411411207-ddu03nsp084vs0qljfaano37p66gftol.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

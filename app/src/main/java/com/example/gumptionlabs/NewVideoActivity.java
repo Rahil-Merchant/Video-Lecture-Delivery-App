@@ -1,13 +1,20 @@
 package com.example.gumptionlabs;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.MimeTypeMap;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
@@ -15,8 +22,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,11 +40,18 @@ public class NewVideoActivity extends AppCompatActivity {
     private EditText et_url;
     private EditText et_pwd;
     private NumberPicker nrPicker_seqNo;
+    private ImageView et_imgView;
+    private Button et_textView;
     String docId;
     SimpleDateFormat s;
     Date Timestamp = new Date();
     String Length,Video_Name,Video_URL,Password;
-    int seq_no;
+    int seq_no, check_img_upload = 0;
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private Uri imageUri;
+
+    private StorageReference mStorageRef;
+    private StorageTask mUploadTask;
 
 
     @Override
@@ -61,6 +78,16 @@ public class NewVideoActivity extends AppCompatActivity {
         nrPicker_seqNo.setMinValue(1);
         nrPicker_seqNo.setMaxValue(50);
         s= new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        et_imgView = findViewById(R.id.imageView);
+        et_textView = findViewById(R.id.button);
+        mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
+        et_textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFileChooser();
+            }
+        });
+
     }
 
     @Override
@@ -83,6 +110,32 @@ public class NewVideoActivity extends AppCompatActivity {
         }
     }
 
+   @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            imageUri = data.getData();
+
+            Picasso.get().load(imageUri).into(et_imgView);
+            check_img_upload = 1;
+        }
+    }
+
+    private void openFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    private String getFileExtension(Uri uri) {
+        ContentResolver cR = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+
     private void saveVideo()
     {
         Video_Name = et_name.getText().toString();
@@ -99,7 +152,7 @@ public class NewVideoActivity extends AppCompatActivity {
 
         if(Video_Name.trim().isEmpty() || Length.trim().isEmpty()
                 || Password.trim().isEmpty() || Video_URL.trim().isEmpty()
-                || docId.trim().isEmpty())
+                || docId.trim().isEmpty() || check_img_upload == 0)
         {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
@@ -114,11 +167,22 @@ public class NewVideoActivity extends AppCompatActivity {
         video.put("Video_Name", Video_Name);
         video.put("Video_URL", Video_URL);
         video.put("seq_no", seq_no);
+        //video.put("Image", imageUri);
+
+        //StorageReference strRef = FirebaseStorage.getInstance().getReference("Uploads");
+        //strRef.getReference().putFile(imageUri);
+        long ctr = System.currentTimeMillis();
+        StorageReference fileReference = mStorageRef.child(ctr
+                + "." + getFileExtension(imageUri));
+
+        video.put("Image",ctr);
+
+        mUploadTask = fileReference.putFile(imageUri);
 
         CollectionReference vidRef = FirebaseFirestore.getInstance()
-                .collection("videos")
-                .document(docId)
-                .collection("videos");
+                        .collection("videos")
+                        .document(docId)
+                        .collection("videos");
 
         vidRef.add(video).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
@@ -149,4 +213,45 @@ public class NewVideoActivity extends AppCompatActivity {
         finish();
         startActivity(new Intent(NewVideoActivity.this,MasterActivity.class));*/
     }
+
+    /*private void uploadFile() {
+        if (imageUri != null)
+        {
+            mStorageRef.putFile(imageUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>()
+            {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception
+                {
+                    if (!task.isSuccessful())
+                    {
+                        throw task.getException();
+                    }
+                    return mStorageRef.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>()
+            {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task)
+                {
+                    if (task.isSuccessful())
+                    {
+                        Uri downloadUri = task.getResult();
+                        //Log.e(TAG, "then: " + downloadUri.toString());
+
+
+                        ImageUpload upload = new ImageUpload(et_name.getText().toString().trim(),
+                                downloadUri.toString());
+
+                        mDatabaseRef.push().setValue(upload);
+                    } else
+                    {
+                        Toast.makeText(NewVideoActivity.this, "upload failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+        else {
+            Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
+        }
+    }*/
 }

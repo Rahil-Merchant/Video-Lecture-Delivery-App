@@ -106,18 +106,18 @@ public class PurchaseHistoryActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.navigation_store:{
-                    startActivity(new Intent(PurchaseHistoryActivity.this,StoreActivity.class));
+                    startActivity(new Intent(getApplicationContext(),StoreActivity.class));
                     return true;
                 }
                 case R.id.navigation_my_courses: {
-                    startActivity(new Intent(PurchaseHistoryActivity.this,MyCoursesActivity.class));
+                    startActivity(new Intent(getApplicationContext(),MyCoursesActivity.class));
                     return true;
                 }
                 case R.id.navigation_purchase_history: {
                     return true;
                 }
                 case R.id.navigation_free_courses: {
-                    startActivity(new Intent(PurchaseHistoryActivity.this,FreeCoursesActivity.class));
+                    startActivity(new Intent(getApplicationContext(),FreeCoursesActivity.class));
                     return true;
                 }
 

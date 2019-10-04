@@ -37,6 +37,7 @@ public class UserListActivity extends AppCompatActivity {
         setTitle("User List");
         userRef=db.collection("users");
         setUpRecyclerView();
+
     }
 
     private void setUpRecyclerView() {
